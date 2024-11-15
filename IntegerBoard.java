@@ -32,6 +32,19 @@ public class IntegerBoard implements GameBoard<Integer> {
         return copy;
     }
 
+    public int[] getFirstZeroIndices() {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (getCell(i, j) == 0) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+
+        // Board is "Full"
+        return null;
+    }
+
     @Override
     public Integer getCell(int x, int y) throws IndexOutOfBoundsException {
         if (!valid)
