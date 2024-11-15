@@ -22,8 +22,9 @@ public class SudokuTree extends AbstractTree<IntegerBoard> {
     @Override
     public Iterable<Position<IntegerBoard>> children(Position<IntegerBoard> p) throws IllegalArgumentException {
         // Collect children in a list
-        List<Position<IntegerBoard>> children = new ArrayList<>();
-        for (BoardPosition child : generateChildren(validate(p))) {
+        List<Position<IntegerBoard>> children  = new ArrayList<Position<IntegerBoard>>();
+        for (BoardPosition child : validate(p).getChildren())
+        {
             children.add(child);
         }
         return children;
@@ -49,11 +50,18 @@ public class SudokuTree extends AbstractTree<IntegerBoard> {
     }
 
     // Generate possible children based on game logic
-    private List<BoardPosition> generateChildren(BoardPosition p) {
+    public List<BoardPosition> generateChildren(BoardPosition p, int i, int j) {
         List<BoardPosition> children = new ArrayList<>();
         IntegerBoard board = p.getElement();
 
-        // TODO
+        for (int k = 1; k <= 9; k++)
+        {
+            IntegerBoard newBoard = new IntegerBoard(board.getBoardCopy());
+            newBoard.setCell(i, j, k);
+            BoardPosition child = new BoardPosition(newBoard, p, null);
+            p.addChild(child);
+            children.add(child);
+        }
 
         return children;
     }

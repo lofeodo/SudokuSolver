@@ -24,6 +24,14 @@ public class IntegerBoard implements GameBoard<Integer> {
         }
     }
 
+    public Integer[][] getBoardCopy(){
+        Integer[][] copy = new Integer[board.length][];
+        for (int i = 0; i < board.length; i++) {
+            copy[i] = board[i].clone();
+        }
+        return copy;
+    }
+
     @Override
     public Integer getCell(int x, int y) throws IndexOutOfBoundsException {
         if (!valid)
