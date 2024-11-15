@@ -57,14 +57,12 @@ public class IntegerBoard implements GameBoard<Integer> {
     @Override
     public void display() {
         if (!valid) {
-            System.out.println("Board is invalid - cannot be displayed.")
+            System.out.println("Board is invalid - cannot be displayed.");
             return;
         }
 
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < width; j++)
-            {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 System.out.print(board[i][j] + " ");
             }
             System.out.println();
