@@ -1,8 +1,8 @@
 public class BoardPosition<T> implements Position<GameBoard<T>> {
     private GameBoard<T> board;
-    private Position<GameBoard<T>> parent;
+    private BoardPosition<T> parent;
 
-    public BoardPosition(GameBoard<T> board, Position<GameBoard<T>> parent) {
+    public BoardPosition(GameBoard<T> board, BoardPosition<T> parent) {
         this.board = board;
         this.parent = parent;
     }
@@ -12,7 +12,7 @@ public class BoardPosition<T> implements Position<GameBoard<T>> {
         return board;
     }
 
-    public Position<GameBoard<T>> getParent() {
+    public BoardPosition<T> getParent() {
         return parent;
     }
 }
