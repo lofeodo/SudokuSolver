@@ -1,18 +1,18 @@
-public class BoardPosition<T> implements Position<GameBoard<T>> {
-    private GameBoard<T> board;
-    private BoardPosition<T> parent;
+public class BoardPosition implements Position<IntegerBoard> {
+    private final IntegerBoard board;
+    private final BoardPosition parent;
 
-    public BoardPosition(GameBoard<T> board, BoardPosition<T> parent) {
+    public BoardPosition(IntegerBoard board, BoardPosition parent) {
         this.board = board;
         this.parent = parent;
     }
 
     @Override
-    public GameBoard<T> getElement() {
+    public IntegerBoard getElement() {
         return board;
     }
 
-    public BoardPosition<T> getParent() {
+    public BoardPosition getParent() {
         return parent;
     }
 }
