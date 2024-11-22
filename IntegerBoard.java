@@ -24,7 +24,7 @@ public class IntegerBoard implements GameBoard<Integer> {
         }
     }
 
-    public Integer[][] getBoardCopy(){
+    public Integer[][] getBoardCopy() {
         Integer[][] copy = new Integer[board.length][];
         for (int i = 0; i < board.length; i++) {
             copy[i] = board[i].clone();
@@ -36,7 +36,7 @@ public class IntegerBoard implements GameBoard<Integer> {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (getCell(i, j) == 0) {
-                    return new int[]{i, j};
+                    return new int[] { i, j };
                 }
             }
         }
@@ -52,7 +52,7 @@ public class IntegerBoard implements GameBoard<Integer> {
 
         checkBounds(x, y);
 
-        return board[y][x];
+        return board[x][y];
     }
 
     @Override
@@ -62,7 +62,7 @@ public class IntegerBoard implements GameBoard<Integer> {
 
         checkBounds(x, y);
 
-        board[y][x] = val;
+        board[x][y] = val;
     }
 
     @Override

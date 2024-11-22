@@ -40,17 +40,25 @@ public class SudokuSolver implements GameSolver {
     }
 
     // validate an insertion in the board
-    public boolean isValidPlacement(int row, int col, Integer value, IntegerBoard board) {
+    public boolean isValidPlacement(int row, int col, IntegerBoard board) {
         // Check rows
+        var value = board.getCell(row, col);
         for (int i = 0; i < board.getHeight(); i++) {
-            if (board.getCell(col, row) == value) {
+            if (i == col) {
+                // Do not compare cell with itself.
+                continue;
+            } else if (board.getCell(row, i) == value) {
                 return false;
             }
         }
 
         // Check columns
         for (int i = 0; i < board.getWidth(); i++) {
-            if (board.getCell(col, row) == value) {
+            if (i == row) {
+                // Do not compare cell with itself.
+                continue;
+            }
+            if (board.getCell(i, col) == value) {
                 return false;
             }
         }
@@ -60,7 +68,10 @@ public class SudokuSolver implements GameSolver {
         int colStart = col - col % 3;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++)
-                if (board.getCell(i + rowStart, j + colStart) == value) {
+                if (i + rowStart == row && j + colStart == col) {
+                    // Do not compare cell with itself.
+                    continue;
+                } else if (board.getCell(i + rowStart, j + colStart) == value) {
                     return false;
                 }
         }
@@ -71,20 +82,31 @@ public class SudokuSolver implements GameSolver {
     private boolean solveBoard(BoardPosition p) {
         IntegerBoard newBoard = p.getElement();
         int[] indices = newBoard.getFirstZeroIndices();
+
+        // If no zero (empty) cells are found, that means the board is full and
+        // therefore solved.
         if (indices == null) {
             solution = newBoard;
             return true;
         }
-        List<BoardPosition> allChildren = tree.generateChildren(p, indices[0], indices[1]);
-        int i = 0;
-        for (BoardPosition child : allChildren) {
-            i++;
-            if (isValidPlacement(indices[0], indices[1], i, p.getElement())) {
-                solveBoard(child);
-            } else {
-                // garbage collector ?
+
+        var x = indices[0];
+        var y = indices[1];
+        List<BoardPosition> children = tree.generateChildren(p, indices[0], indices[1]);
+
+        // // For debugging - remove after
+        // newBoard.display();
+        // System.out.println();
+
+        for (BoardPosition child : children) {
+            if (isValidPlacement(x, y, child.getElement())) {
+                if (solveBoard(child)) {
+                    return true;
+                }
             }
         }
+
+        // All possible boards have been tried - there is no solution
         return false;
     }
 }
