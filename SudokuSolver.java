@@ -8,7 +8,7 @@ import java.util.List;
  * @since 1.0
  */
 
- public class SudokuSolver implements GameSolver {
+public class SudokuSolver implements GameSolver {
 
     // attributes
     private IntegerBoard board;
@@ -16,16 +16,21 @@ import java.util.List;
     private SudokuTree tree;
 
     // constructor
-    public SudokuSolver( IntegerBoard board ) {
-        this.board = new IntegerBoard(board.getBoardCopy());
+    public SudokuSolver(GameBoard<Integer> board) {
+        if (!(board instanceof IntegerBoard)) {
+            throw new IllegalArgumentException("Invalid board type. The board must be of type IntegerBoard.");
+        }
+
+        this.board = (IntegerBoard) board;
         this.solution = null;
-        this.tree = new SudokuTree(board);
+        this.tree = new SudokuTree(this.board);
     }
 
     // mandatory GameSolver interface methods
     public boolean solve() {
         return solveBoard(tree.root());
     }
+
     public void printSolution() {
         if (solution != null) {
             solution.display();
@@ -34,9 +39,8 @@ import java.util.List;
         }
     }
 
-
     // validate an insertion in the board
-    public boolean isValidPlacement( int row, int col, Integer value, IntegerBoard board ) {
+    public boolean isValidPlacement(int row, int col, Integer value, IntegerBoard board) {
         // Check rows
         for (int i = 0; i < board.getHeight(); i++) {
             if (board.getCell(col, row) == value) {
@@ -73,9 +77,9 @@ import java.util.List;
         }
         List<BoardPosition> allChildren = tree.generateChildren(p, indices[0], indices[1]);
         int i = 0;
-        for( BoardPosition child: allChildren ) {
+        for (BoardPosition child : allChildren) {
             i++;
-            if ( isValidPlacement(indices[0], indices[1], i, p.getElement()) ) {
+            if (isValidPlacement(indices[0], indices[1], i, p.getElement())) {
                 solveBoard(child);
             } else {
                 // garbage collector ?

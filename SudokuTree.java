@@ -6,7 +6,7 @@ public class SudokuTree extends AbstractTree<IntegerBoard> {
     private final BoardPosition root;
 
     public SudokuTree(IntegerBoard initialBoard) {
-        this.root = new BoardPosition(initialBoard, null);
+        this.root = new BoardPosition(initialBoard, null, null);
     }
 
     @Override
@@ -22,9 +22,8 @@ public class SudokuTree extends AbstractTree<IntegerBoard> {
     @Override
     public Iterable<Position<IntegerBoard>> children(Position<IntegerBoard> p) throws IllegalArgumentException {
         // Collect children in a list
-        List<Position<IntegerBoard>> children  = new ArrayList<Position<IntegerBoard>>();
-        for (BoardPosition child : validate(p).getChildren())
-        {
+        List<Position<IntegerBoard>> children = new ArrayList<Position<IntegerBoard>>();
+        for (BoardPosition child : validate(p).getChildren()) {
             children.add(child);
         }
         return children;
@@ -32,7 +31,12 @@ public class SudokuTree extends AbstractTree<IntegerBoard> {
 
     @Override
     public int numChildren(Position<IntegerBoard> p) throws IllegalArgumentException {
-        return generateChildren(validate(p)).size();
+        var children = validate(p).getChildren();
+        if (children == null) {
+            return 0;
+        }
+
+        return children.size();
     }
 
     @Override
@@ -54,8 +58,7 @@ public class SudokuTree extends AbstractTree<IntegerBoard> {
         List<BoardPosition> children = new ArrayList<>();
         IntegerBoard board = p.getElement();
 
-        for (int k = 1; k <= 9; k++)
-        {
+        for (int k = 1; k <= 9; k++) {
             IntegerBoard newBoard = new IntegerBoard(board.getBoardCopy());
             newBoard.setCell(i, j, k);
             BoardPosition child = new BoardPosition(newBoard, p, null);
