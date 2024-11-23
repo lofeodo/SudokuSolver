@@ -37,6 +37,8 @@ public class SudokuSolver implements GameSolver {
 
     // Validate a cell value in the board
     public boolean isValidPlacement(int row, int col, IntegerBoard board) {
+        int subsquareSize = board.getSubsquareSize();
+
         // Check rows
         var value = board.getCell(row, col);
         for (int i = 0; i < board.getHeight(); i++) {
@@ -60,10 +62,10 @@ public class SudokuSolver implements GameSolver {
         }
 
         // Check 3x3 subsquare
-        int rowStart = row - row % 3;
-        int colStart = col - col % 3;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++)
+        int rowStart = row - row % subsquareSize;
+        int colStart = col - col % subsquareSize;
+        for (int i = 0; i < subsquareSize; i++) {
+            for (int j = 0; j < subsquareSize; j++)
                 if (i + rowStart == row && j + colStart == col) {
                     // Do not compare cell with itself.
                     continue;
@@ -86,8 +88,8 @@ public class SudokuSolver implements GameSolver {
             return true;
         }
 
-        var row = indices[0];
-        var col = indices[1];
+        int row = indices[0];
+        int col = indices[1];
         List<BoardPosition> children = tree.generateChildren(p, row, col);
 
         for (BoardPosition child : children) {
