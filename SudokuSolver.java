@@ -94,10 +94,6 @@ public class SudokuSolver implements GameSolver {
         var y = indices[1];
         List<BoardPosition> children = tree.generateChildren(p, indices[0], indices[1]);
 
-        // // For debugging - remove after
-        // newBoard.display();
-        // System.out.println();
-
         for (BoardPosition child : children) {
             if (isValidPlacement(x, y, child.getElement())) {
                 if (solveBoard(child)) {
