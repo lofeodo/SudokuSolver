@@ -74,20 +74,24 @@ public class IntegerBoard implements GameBoard<Integer> {
 
     @Override
     public void display() {
-        System.out.print("-------------------------");
+        int numSubSquares = width / subsquareSize;
+        int lineLength = 2 * 2 + 3 * (numSubSquares - 1) + 2 * width - numSubSquares;
+        String line = "-".repeat(lineLength);
+
+        System.out.print(line);
         System.out.println();
         for (int row = 0; row < height; row++) {
             System.out.print("| ");
             for (int col = 0; col < width; col++) {
-                if ((col + 1) % 3 == 0) {
+                if ((col + 1) % subsquareSize == 0) {
                     System.out.print(board[row][col] + " | ");
                 } else {
                     System.out.print(board[row][col] + " ");
                 }
             }
             System.out.println();
-            if ((row + 1) % 3 == 0) {
-                System.out.print("-------------------------");
+            if ((row + 1) % subsquareSize == 0) {
+                System.out.print(line);
                 System.out.println();
             }
         }
