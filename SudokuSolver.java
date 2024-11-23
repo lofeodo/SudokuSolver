@@ -12,6 +12,7 @@ public class SudokuSolver implements GameSolver {
     private IntegerBoard board;
     private IntegerBoard solution;
     private SudokuTree tree;
+    private final int subsquareSize;
 
     public SudokuSolver(GameBoard<Integer> board) {
         if (!(board instanceof IntegerBoard)) {
@@ -21,6 +22,7 @@ public class SudokuSolver implements GameSolver {
         this.board = (IntegerBoard) board;
         this.solution = null;
         this.tree = new SudokuTree(this.board);
+        this.subsquareSize = this.board.getSubsquareSize();
     }
 
     public boolean solve() {
@@ -37,42 +39,32 @@ public class SudokuSolver implements GameSolver {
 
     // Validate a cell value in the board
     public boolean isValidPlacement(int row, int col, IntegerBoard board) {
-        int subsquareSize = board.getSubsquareSize();
+        var value = board.getCell(row, col);
 
         // Check rows
-        var value = board.getCell(row, col);
         for (int i = 0; i < board.getHeight(); i++) {
-            if (i == col) {
-                // Do not compare cell with itself.
-                continue;
-            } else if (board.getCell(row, i) == value) {
+            if (i != col && board.getCell(row, i) == value) {
                 return false;
             }
         }
 
         // Check columns
         for (int i = 0; i < board.getWidth(); i++) {
-            if (i == row) {
-                // Do not compare cell with itself.
-                continue;
-            }
-            if (board.getCell(i, col) == value) {
+            if (i != row && board.getCell(i, col) == value) {
                 return false;
             }
         }
 
         // Check 3x3 subsquare
-        int rowStart = row - row % subsquareSize;
-        int colStart = col - col % subsquareSize;
-        for (int i = 0; i < subsquareSize; i++) {
-            for (int j = 0; j < subsquareSize; j++)
-                if (i + rowStart == row && j + colStart == col) {
-                    // Do not compare cell with itself.
-                    continue;
-                } else if (board.getCell(i + rowStart, j + colStart) == value) {
+        int subsquareRowStart = row - row % subsquareSize;
+        int subsquareColStart = col - col % subsquareSize;
+        for (int i = subsquareRowStart; i < subsquareRowStart + subsquareSize; i++) {
+            for (int j = subsquareColStart; j < subsquareColStart + subsquareSize; j++)
+                if (i != row && j != col && board.getCell(i, j) == value) {
                     return false;
                 }
         }
+
         return true;
     }
 
@@ -93,10 +85,8 @@ public class SudokuSolver implements GameSolver {
         List<BoardPosition> children = tree.generateChildren(p, row, col);
 
         for (BoardPosition child : children) {
-            if (isValidPlacement(row, col, child.getElement())) {
-                if (solveBoard(child)) {
-                    return true;
-                }
+            if (isValidPlacement(row, col, child.getElement()) && solveBoard(child)) {
+                return true;
             }
         }
 
