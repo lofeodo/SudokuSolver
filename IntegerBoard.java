@@ -46,23 +46,23 @@ public class IntegerBoard implements GameBoard<Integer> {
     }
 
     @Override
-    public Integer getCell(int x, int y) throws IndexOutOfBoundsException {
+    public Integer getCell(int row, int col) throws IndexOutOfBoundsException {
         if (!valid)
             return null;
 
-        checkBounds(x, y);
+        checkBounds(row, col);
 
-        return board[x][y];
+        return board[row][col];
     }
 
     @Override
-    public void setCell(int x, int y, Integer val) throws IndexOutOfBoundsException {
+    public void setCell(int row, int col, Integer val) throws IndexOutOfBoundsException {
         if (!valid)
             return;
 
-        checkBounds(x, y);
+        checkBounds(row, col);
 
-        board[x][y] = val;
+        board[row][col] = val;
     }
 
     @Override
@@ -82,11 +82,22 @@ public class IntegerBoard implements GameBoard<Integer> {
             return;
         }
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                System.out.print(board[i][j] + " ");
+        System.out.print("-------------------------");
+        System.out.println();
+        for (int row = 0; row < height; row++) {
+            System.out.print("| ");
+            for (int col = 0; col < width; col++) {
+                if ((col + 1) % 3 == 0) {
+                    System.out.print(board[row][col] + " | ");
+                } else {
+                    System.out.print(board[row][col] + " ");
+                }
             }
             System.out.println();
+            if ((row + 1) % 3 == 0) {
+                System.out.print("-------------------------");
+                System.out.println();
+            }
         }
     }
 

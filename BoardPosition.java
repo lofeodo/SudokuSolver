@@ -21,15 +21,14 @@ public class BoardPosition implements Position<IntegerBoard> {
         return parent;
     }
 
-    public void addChild(BoardPosition p){
-        if (children == null)
-        {
+    public void addChild(BoardPosition p) {
+        if (children == null) {
             children = new ArrayList<BoardPosition>();
         }
         children.add(p);
     }
 
-    public List<BoardPosition> getChildren(){
+    public List<BoardPosition> getChildren() {
         return children;
     }
 }
