@@ -9,13 +9,10 @@ import java.util.List;
  */
 
 public class SudokuSolver implements GameSolver {
-
-    // attributes
     private IntegerBoard board;
     private IntegerBoard solution;
     private SudokuTree tree;
 
-    // constructor
     public SudokuSolver(GameBoard<Integer> board) {
         if (!(board instanceof IntegerBoard)) {
             throw new IllegalArgumentException("Invalid board type. The board must be of type IntegerBoard.");
@@ -26,7 +23,6 @@ public class SudokuSolver implements GameSolver {
         this.tree = new SudokuTree(this.board);
     }
 
-    // mandatory GameSolver interface methods
     public boolean solve() {
         return solveBoard(tree.root());
     }
@@ -39,7 +35,7 @@ public class SudokuSolver implements GameSolver {
         }
     }
 
-    // validate an insertion in the board
+    // Validate a cell value in the board
     public boolean isValidPlacement(int row, int col, IntegerBoard board) {
         // Check rows
         var value = board.getCell(row, col);
@@ -78,7 +74,7 @@ public class SudokuSolver implements GameSolver {
         return true;
     }
 
-    // actual solver
+    // Recursive solver
     private boolean solveBoard(BoardPosition p) {
         IntegerBoard newBoard = p.getElement();
         int[] indices = newBoard.getFirstZeroIndices();
@@ -90,19 +86,20 @@ public class SudokuSolver implements GameSolver {
             return true;
         }
 
-        var x = indices[0];
-        var y = indices[1];
-        List<BoardPosition> children = tree.generateChildren(p, indices[0], indices[1]);
+        var row = indices[0];
+        var col = indices[1];
+        List<BoardPosition> children = tree.generateChildren(p, row, col);
 
         for (BoardPosition child : children) {
-            if (isValidPlacement(x, y, child.getElement())) {
+            if (isValidPlacement(row, col, child.getElement())) {
                 if (solveBoard(child)) {
                     return true;
                 }
             }
         }
 
-        // All possible boards have been tried - there is no solution
+        // All possible child boards have been tried - there is no solution for this
+        // board
         return false;
     }
 }

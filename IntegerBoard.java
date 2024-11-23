@@ -101,8 +101,8 @@ public class IntegerBoard implements GameBoard<Integer> {
         }
     }
 
-    private void checkBounds(int x, int y) {
-        if (x < 0 || x >= width || y < 0 || y >= height) {
+    private void checkBounds(int row, int col) {
+        if (row < 0 || row >= width || col < 0 || col >= height) {
             throw new IndexOutOfBoundsException("Cell position out of bounds.");
         }
     }
