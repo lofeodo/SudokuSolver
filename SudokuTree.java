@@ -70,8 +70,9 @@ public class SudokuTree extends AbstractTree<IntegerBoard> {
     public List<BoardPosition> generateChildren(BoardPosition p, int i, int j) {
         List<BoardPosition> children = new ArrayList<>();
         IntegerBoard board = p.getElement();
+        int height = (int) board.getHeight();
 
-        for (int k = 1; k <= 9; k++) {
+        for (int k = 1; k <= height; k++) {
             IntegerBoard newBoard = new IntegerBoard(board.getBoardCopy());
             newBoard.setCell(i, j, k);
             BoardPosition child = new BoardPosition(newBoard, p, null);
