@@ -1,6 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * interface for grid-oriented game boards storing generic type values
+ *
+ * @author Daniel Leofodo et Arielle Gazzé
+ * 
+ * @version 1.1
+ * Make the code work for any size sudoku board
+ * @since 1.0 (8 November 2024)
+ */
+
 public class SudokuTree extends AbstractTree<IntegerBoard> {
 
     private final BoardPosition root;

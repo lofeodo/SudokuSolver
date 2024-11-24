@@ -1,6 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * interface for grid-oriented game boards storing generic type values
+ *
+ * @author Daniel Leofodo et Arielle Gazzé
+ * 
+ * @since 1.0 (8 November 2024)
+ */
+
 public class BoardPosition implements Position<IntegerBoard> {
     private final IntegerBoard board;
     private final BoardPosition parent;

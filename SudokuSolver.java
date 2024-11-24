@@ -4,7 +4,9 @@ import java.util.List;
  * SudokuSolver is an implementation of GameSolver
  *
  * @author Daniel Lofeodo, Arielle Gazzé
- * @version 1.0
+ * 
+ * @version 1.1
+ * Make the code work with any size sudoku
  * @since 1.0
  */
 
