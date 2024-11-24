@@ -6,6 +6,7 @@ import java.util.List;
  *
  * @author Daniel Leofodo et Arielle Gazzé
  * 
+ * @version 1.0
  * @since 1.0 (8 November 2024)
  */
 

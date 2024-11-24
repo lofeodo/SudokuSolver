@@ -7,7 +7,7 @@ import java.util.List;
  * @author Daniel Leofodo et Arielle Gazzé
  * 
  * @version 1.1
- * Make the code work for any size sudoku board
+ * Make the code work for any size of sudoku board
  * @since 1.0 (8 November 2024)
  */
 
