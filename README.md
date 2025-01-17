@@ -2,7 +2,7 @@
 
 This app solves sudokus that have a dimension $n^2 \times n^2$ where $n \in \mathbf{R}^+$ (e.g. a typical sudoku is 9x9, $n = 3$). 
 
-The application uses a tree recursion algorithm  to generate all possible solutions at a given position and continues until a generated board is completely full. The algorithm backtracks if the generated board is invalid.
+The application uses a tree recursion algorithm  to generate all possible solutions at a given position and continues until a generated board is completely full (solved). The algorithm backtracks if the generated board is invalid. If the algorithm does not manage to generate a complete board, then the sudoku input did not have a solution.
 
 # How to use
 
